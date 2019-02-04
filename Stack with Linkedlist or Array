@@ -1,0 +1,132 @@
+//Stack with Linked list:
+
+struct stack {
+	int data;
+	struct stack *next;
+
+};
+
+
+void push(struct stack **head, int d) {
+
+	struct stack* Newnode = new struct stack[sizeof(struct stack)];
+	Newnode->data = d;
+	Newnode->next = *head;
+	*head = Newnode;
+
+}
+
+void pop(struct stack **head) {
+
+	auto tmp = *head;
+	*head = tmp->next;
+	delete tmp;
+
+}
+
+int peek(struct stack*head) {
+	return head->data;
+}
+
+void showstack(struct stack*node) {
+
+	while (node != NULL) {
+		cout << node->data << '\t';
+		node = node->next;
+	}
+	cout << endl;
+}
+
+bool isempty(struct stack *head) {
+	return !head;
+}
+
+int main() {
+	struct stack *head = NULL;
+
+	for (int i = 0; i < rand() % 20 + 10; i++) {	
+		push(&head, rand() % 20);	
+	}
+	showstack(head);
+    cout << peek(head) << " - element to be removed"<< endl;
+	pop(&head);
+	cout << peek(head) << " next top element in the stack"<< endl;
+	showstack(head);
+
+}
+
+
+
+//Stack with Array:
+#include <iostream> 
+
+using namespace std;
+
+#define SIZE 5000 
+struct stack {
+
+	int top;
+
+	stack() { top = -1; }
+	int array[SIZE];
+
+	bool push(int data);
+	int pop();
+	bool isempty();
+	int peek();
+	void showstack();
+
+};
+
+bool stack::push(int data){
+
+	if (top >= SIZE - 1) {
+		cout << "Stack Overflow" << endl;
+		return false;
+	}
+	else {
+		array[++top] = data;
+		return true;
+	}
+}
+
+int stack::pop() {
+
+	if (top < 0) {
+		cout << "Stack underflow";
+		return 0;
+	}
+	else {
+		return array[top--];
+	}
+}
+
+bool stack::isempty() {
+	if (top == -1) {
+		return true;
+	}
+	return false;
+}
+
+int stack::peek() {
+	return array[top];
+}
+
+void stack::showstack() {
+	for (int i = top; i >= 0; i--) {
+		cout << array[i] << '\t';
+	}
+}
+
+int main() {
+
+	stack stack;
+
+	for (size_t i = 0; i < 10; i++)
+	{
+		stack.push(i);
+	}
+
+	stack.showstack();
+
+}
